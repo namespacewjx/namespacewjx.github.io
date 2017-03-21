@@ -20,6 +20,9 @@ description: > # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://namespacewjx.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  namespacewjx
+repository: namespacewjx/namespacewjx.github.io
+JEYLLY_GITHUB_TOKEN: 7a80f27e47a5b717ef3a5c1d3b41f85eec525afa
+SSL_CERT_FILE: G:\namespacewjx\cacert.pem
 
 # Build settings
 markdown: kramdown
@@ -29,3 +32,9 @@ gems:
 exclude:
   - Gemfile
   - Gemfile.lock
+  - github token.txt
+  - cacert.pem
+# Global Variables
+excerpt_separator: <!--start-->
+show_downloads: false
+
