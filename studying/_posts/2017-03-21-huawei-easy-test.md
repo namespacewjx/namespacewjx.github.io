@@ -207,7 +207,48 @@ public class Main {
 
 后面想想，好像可以更进一步的优化。因为计算结果也是后序遍历这棵树，它给的字符串就是后序遍历的。应该能优化一下。
 
-*此处可能有另一个版本的算法*
+{% highlight java %}
+private static int stackCal(String postfix) {
+	Stack<Integer> stack = new Stack<>();
+
+	for (int i = 0; i < postfix.length(); i++) {
+		char c = postfix.charAt(i);
+
+		if (c >= '0' && c <= '9') {
+			stack.push(c - '0');
+		} else if (c >= 'A' && c <= '9') {
+			stack.push(c - 'A' + 10);
+		} else {
+			int result;
+
+			//此时是运算符字符，如果栈里面没有两个元素，
+			//则这个字符串是有问题的，有一个中间结点度为1，不是有效的树
+			if (stack.size() < 2)
+				return -1;
+
+			//注意，栈顶元素是右子树的结果，
+                //因此不能连续pop两次来算，必须先存着
+			int a = stack.pop();
+
+			if (c == '+') {
+				result = stack.pop() + a;
+			} else if (c == '-') {
+				result = stack.pop() - a;
+			} else if (c == '*') {
+				result = stack.pop() * a;
+			} else
+				return -1;//不是有效的算术符号的时候返回-1
+			stack.push(result);
+		}
+	}
+
+	//若此时栈还有很多个元素，也是有问题的字符串
+	if (stack.size() != 1)
+		return -1;
+
+	return stack.pop();
+}
+{% endhighlight %}
 
 回到现实，后面还有好多好多的面试呢。这个笔试，只是第一步啊。。。
 
