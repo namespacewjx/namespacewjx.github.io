@@ -8,7 +8,7 @@
 
 > 博客目前仍然在建设中，简陋一点咯~
 
-[我是谁？](/resume)
+[我是谁？](/resume)（先把简历放一下，有空可以写一篇没那么无聊的介绍！）
 
 浏览我的[Github](http://github.com/namespacewjx)
 
