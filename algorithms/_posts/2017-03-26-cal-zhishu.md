@@ -72,6 +72,8 @@ public static List<Integer> calZhiShu2(int N) {
 
 但是并不是测出来并不是我想的那样，里面加的那个if语句反而拖累了。大家可以去掉注释，然后注释掉另外一个ArrayList语句试试。
 
+{% highlight java %}
+
 public static List<Integer> calZhiShu3(int N) {
 	boolean[] num = new boolean[N];
 //	int count = 1;//用于计算有多少个非质数，初始化为1是因为不把1算质数
