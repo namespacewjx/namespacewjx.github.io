@@ -12,11 +12,15 @@
 
 浏览我的[Github](http://github.com/namespacewjx)
 
+[值得去的学习网站和资源](/useful_websites)
+
 
 ## 文章列表
 
 {% for post in site.posts %}
 - [{{ post.title }}]({{ post.url }})
 {% endfor %}
+
+
 
 
