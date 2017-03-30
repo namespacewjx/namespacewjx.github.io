@@ -35,7 +35,7 @@ permalink: /useful_websites
 - [Coding.net](http://coding.net)：国内的Git仓库，与Github功能类似，不过提供项目网盘，项目管理，任务列表等方便的功能
 - [InfoQ](http://http://www.infoq.com/cn/)：一个报道软件开发领域新闻的网站
 - [StackOverFlow](http://http://stackoverflow.com/)：著名的软件开发者社区
-- [CSDN](http://www.csdn.net/)可能是国内最大的编程社区，还有许多有用的资源在这里有。（才不告诉你下载积分什么的，嘿嘿嘿）
+- [CSDN](http://www.csdn.net/)：可能是国内最大的编程社区，还有许多有用的资源在这里有。（才不告诉你下载积分什么的，嘿嘿嘿）
 - [LeetCode](https://leetcode.com/)：在线OJ网站，程序员刷算法很重要哦！
 - [Kaggle](https://www.kaggle.com/)：机器学习社区，比赛，交流，等等
 - [Linux中国](https://linux.cn/)：Linux中国开源社区，学习交流Linux的好地方
