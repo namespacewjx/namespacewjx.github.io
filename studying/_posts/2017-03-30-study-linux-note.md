@@ -25,4 +25,4 @@ tag: 笔记, Linux
 |磁带机（当前磁带）|/dev/tape|
 |IDE硬盘机（旧式系统才有）|/dev/hd[a-d]|
 
-
+there is a bug!
