@@ -10,7 +10,7 @@
 
 [我是谁？](/resume)（先把简历放一下，有空可以写一篇没那么无聊的介绍！）
 
-浏览我的[Github](http://github.com/namespacewjx)
+浏览我的[Github](http://github.com/packagewjx)
 
 [值得去的学习网站和资源](/useful_websites)
 
