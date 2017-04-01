@@ -21,8 +21,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://namespacewjx.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  namespacewjx
 repository: namespacewjx/namespacewjx.github.io
-JEYLLY_GITHUB_TOKEN: 7a80f27e47a5b717ef3a5c1d3b41f85eec525afa
-SSL_CERT_FILE: G:\namespacewjx\cacert.pem
+JEYLLY_GITHUB_TOKEN: 3ad0ed274c1f16d81864cb5977ed6a40a2d0c72b
 
 # Build settings
 markdown: kramdown
