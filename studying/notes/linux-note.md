@@ -1,30 +1,35 @@
 ---
 title: Linux学习笔记
 date: 2017-03-30 18:48:07 +0800
-tag: 笔记, Linux 
+permalink: /studying/notes/linux
 ---
 
-基于《鸟哥的Linux私房菜》做成的笔记。
+基于《鸟哥的Linux私房菜》做成的笔记。只摘录重点内容。
 
 查manual手册是极好的，因此在每个指令的最后都附上了在线manual的网址。[在线Linux Manual](http://man7.org/linux/man-pages/index.html)
+
+
 
 # 目录
 
 
 <!-- vim-markdown-toc Redcarpet -->
 * [第二章 主机规划与磁盘分区](#第二章-主机规划与磁盘分区)
-    * [各硬件设备在Linux中的文件名](#各硬件设备在linux中的文件名)
-    * [分区表格式](#分区表格式)
-        * [MSDOS分区表格式](#msdos分区表格式)
-        * [GUID partition table GPT磁盘分区表](#guid-partition-table-gpt磁盘分区表)
+    * [Linux与硬件的搭配](#linux与硬件的搭配)
+        * [各硬件设备在Linux中的文件名](#各硬件设备在linux中的文件名)
+    * [磁盘分区](#磁盘分区)
+        * [分区表格式](#分区表格式)
+            * [MSDOS分区表格式](#msdos分区表格式)
+            * [GUID partition table GPT磁盘分区表](#guid-partition-table-gpt磁盘分区表)
 * [第四章 首次登陆与线上求助](#第四章-首次登陆与线上求助)
-    * [基础指令的操作](#基础指令的操作)
-        * [显示日期的指令-date](#显示日期的指令-date)
-        * [显示日历的指令-cal](#显示日历的指令-cal)
-        * [简单计算器-bc](#简单计算器-bc)
-    * [重要的热键](#重要的热键)
+    * [命令行模式指令的下达](#命令行模式指令的下达)
+        * [基础指令的操作](#基础指令的操作)
+            * [显示日期的指令-date](#显示日期的指令-date)
+            * [显示日历的指令-cal](#显示日历的指令-cal)
+            * [简单计算器-bc](#简单计算器-bc)
+        * [重要的热键](#重要的热键)
     * [Linux帮助指令](#linux帮助指令)
-        * [指令的--help求助说明](#指令的-help求助说明)
+        * [指令的--help求助](#指令的-help求助)
         * [man page](#man-page)
             * [man page中指令后面的代号所代表的内容](#man-page中指令后面的代号所代表的内容)
             * [man page的主要内容划分](#man-page的主要内容划分)
@@ -116,6 +121,36 @@ tag: 笔记, Linux
         * [Ext2 Ext3 Ext4文件的存取与日志式文件系统的功能](#ext2-ext3-ext4文件的存取与日志式文件系统的功能)
             * [日志式文件系统](#日志式文件系统)
         * [Linux文件系统的运行](#linux文件系统的运行)
+        * [挂载点的意义](#挂载点的意义)
+        * [其他Linux支持的文件系统与VFS](#其他linux支持的文件系统与vfs)
+        * [XFS文件系统简介](#xfs文件系统简介)
+            * [xfs文件系统的配置](#xfs文件系统的配置)
+            * [xfs文件系统描述数据观察](#xfs文件系统描述数据观察)
+    * [文件系统的简单操作](#文件系统的简单操作)
+        * [磁盘与目录的容量](#磁盘与目录的容量)
+            * [列出文件系统整体磁盘使用量-df](#列出文件系统整体磁盘使用量-df)
+            * [du指令](#du指令)
+        * [硬链接和符号链接-ln](#硬链接和符号链接-ln)
+            * [Hard Link-硬链接，实体链接](#hard-link-硬链接，实体链接)
+            * [Symbolic Link-符号链接，也就是捷径](#symbolic-link-符号链接，也就是捷径)
+            * [创建链接的指令-ln](#创建链接的指令-ln)
+            * [关于目录的link数量](#关于目录的link数量)
+    * [磁盘的分区 格式化 检验与挂载](#磁盘的分区-格式化-检验与挂载)
+        * [观察磁盘分区状态](#观察磁盘分区状态)
+            * [lsblk-列出系统上所有磁盘列表](#lsblk-列出系统上所有磁盘列表)
+            * [blkid-列出设备的UUID等参数](#blkid-列出设备的uuid等参数)
+        * [磁盘分区 gdisk fdisk](#磁盘分区-gdisk-fdisk)
+            * [gdisk](#gdisk)
+            * [fdisk](#fdisk)
+        * [磁盘格式化-创建文件系统-mkfs](#磁盘格式化-创建文件系统-mkfs)
+            * [mkfs.xfs](#mkfs-xfs)
+            * [mkfs.ext4](#mkfs-ext4)
+            * [其他文件系统](#其他文件系统)
+        * [文件系统检验](#文件系统检验)
+            * [处理xfs文件系统-xfs_repair](#处理xfs文件系统-xfs_repair)
+            * [处理ext4文件系统-fsck.ext4](#处理ext4文件系统-fsck-ext4)
+        * [文件系统挂载与卸载](#文件系统挂载与卸载)
+            * [挂载指令-mount](#挂载指令-mount)
 
 <!-- vim-markdown-toc -->
 
@@ -125,7 +160,11 @@ tag: 笔记, Linux
 
 ---
 
-## 各硬件设备在Linux中的文件名
+## Linux与硬件的搭配
+
+---
+
+### 各硬件设备在Linux中的文件名
 
 |设备|文件名|
 |----|------|
@@ -148,11 +187,13 @@ tag: 笔记, Linux
 
 ---
 
-## 分区表格式
+## 磁盘分区
 
 ---
 
-### MSDOS分区表格式
+### 分区表格式
+
+#### MSDOS分区表格式
 
 放在磁盘的第一个扇区。有两个数据：
 - 主要开机记录区（Master Boot Record, MBR），是安装开机管理程序的地方，446Bytes。
@@ -160,9 +201,8 @@ tag: 笔记, Linux
 
 分区表只有64Bytes，只能容纳四笔记录。四组分区信息成为主要分区或延伸分区。逻辑分区是延伸分区切割出来的分区。延伸分区最多有一个。
 
----
 
-### GUID partition table GPT磁盘分区表
+#### GUID partition table GPT磁盘分区表
 
 区块地址（Logical Block Address，LBA）代表扇区，默认512Bytes。GPT用34个LBA区块来记录分区信息。另外最后的33个LBA来备份。
 
@@ -176,11 +216,13 @@ tag: 笔记, Linux
 
 ---
 
-## 基础指令的操作
+## 命令行模式指令的下达
 
 ---
 
-### 显示日期的指令-date
+### 基础指令的操作
+
+#### 显示日期的指令-date
 
 用途：打印或设置系统日期和时间
 
@@ -193,9 +235,7 @@ tag: 笔记, Linux
 
 [***manual***](http://man7.org/linux/man-pages/man1/date.1.html)
 
----
-
-### 显示日历的指令-cal
+#### 显示日历的指令-cal
 
 用途：打印日历，可指定年月
 
@@ -213,9 +253,7 @@ tag: 笔记, Linux
 
 [***manual***](http://man7.org/linux/man-pages/man1/cal.1.html)
 
----
-
-### 简单计算器-bc
+#### 简单计算器-bc
 
 bc是一个小程序，可以支持+-*/%^的计算。
 
@@ -223,7 +261,7 @@ bc是一个小程序，可以支持+-*/%^的计算。
 
 ---
 
-## 重要的热键
+### 重要的热键
 
 ---
 
@@ -244,11 +282,11 @@ bc是一个小程序，可以支持+-*/%^的计算。
 
 ## Linux帮助指令
 
------
+---
 
-### 指令的--help求助说明
+### 指令的--help求助
 
-查询比较常用的格式、选项和参数等。
+几乎所有的Linux指令都有--help选项，有常用选项和参数的说明
 
 ---
 
@@ -284,6 +322,7 @@ bc是一个小程序，可以支持+-*/%^的计算。
 |EXAMPLE|一些可以参考的范例|
 
 #### man page中的按键
+
 |按键|功能|
 |----|----|
 |[空白键]|向下翻一页|
@@ -1335,3 +1374,373 @@ Linux文件系统与内存：
 - 手动使用sync将dirty文件写回硬盘
 - 正常关机时，关机指令会调用sync将内存数据写入
 - 若没有正常关机，由于数据没有写回硬盘，可能会导致文件数据丢失。
+
+---
+
+### 挂载点的意义
+
+每个文件系统都有独立的inode/block/superblock等信息，这个文件系统要能够链接到目录才能被我们使用。将文件系统与目录树结合的动作称为**挂载**。挂载点一定是目录，该目录为进入该文件系统的入口。
+
+同一个文件系统的一个inode只对应一个文件，因此可以用inode号码来判断是否为同一个文件。
+
+---
+
+### 其他Linux支持的文件系统与VFS
+
+Linux支持的常见的文件系统有
+- 传统文件系统：ext2/minix/MS-DOS/FAT（使用vfat）/iso9669（光盘）等
+- 日志式文件系统：ext3/ext4/ReiserFS/Windows's NTFS/IBM's JFS/SGI's XFS/ZFS
+- 网络文件系统：NFS/SMBFS
+
+若需要查看Linux支持的文件系统，可执行命令：`ls -l /lib/modules/$(uname -r)/kernel/fs`。
+
+而系统目前载入的文件系统的查看，执行：`cat /proc/filesystems`。
+
+- Linux VFS
+
+VFS，全称Virtual Filesystem Switch，是Linux系统中管理整个文件系统的核心功能。整个VFS可以用下图来描述。
+
+![VFS](/assets/pictures/studying/VFS.PNG)
+
+---
+
+### XFS文件系统简介
+
+EXT家族的缺点，支持度广，但是格式化非常慢。同时，在大文件上，性能也比xfs要差些。
+
+#### xfs文件系统的配置
+
+xfs是一个日志式文件系统，主要用于需要大容量磁盘以及高性能文件系统的环境。
+
+xfs文件系统把磁盘区域划分为三个部分：
+- 数据区（data section）：  
+  与ext家族类似，包含inode、data block、super block等数据，也分多个储存区群组（allocation groups）放置文件系统需要的数据。每个群组包含了整个文件系统的superblock、剩余空间的管理机制以及inode的分配和追踪。而**inode和block都是系统需要的时候才会动态配置产生**，因此格式化很快。  
+  xfs的block大小可设置为512Bytes至64KB，但由于内存控制的缘故，最高只能4KB。而inode可以设置256B至2MB那么大。
+- 文件系统活动日志区（log section）  
+- 实时运行区（realtime section）  
+  当有文件被创建时，xfs会在这个区域里面找一个到数个的extent区块，将文件放置在这个区块内，等到分配完毕后，再写入到data section的inode和block里去。extent的大小在格式化时指定，4KB到1GB。默认64KB。这个区域关系到整个文件系统的性能。
+
+#### xfs文件系统描述数据观察
+
+`df`指令可以查看磁盘使用情况，这里没细说，先上[手册](http://man7.org/linux/man-pages/man1/df.1.html)
+
+使用`xfs_info`指令去观察。
+
+示例与解释
+
+{% highlight bash %}
+[root@study ~]# xfs_info /dev/vda2
+1  meta-data=/dev/vda2         isize=256    agcount=4, agsize=65536 blks
+2           =                  sectsz=512   attr=2, projid32bit=1
+3           =                  crc=0        finobt=0
+4  data     =                  bsize=4096   blocks=262144, imaxpct=25
+5           =                  sunit=0      swidth=0 blks
+6  naming   =version 2         bsize=4096   ascii-ci=0 ftype=0
+7  log      =internal          bsize=4096   blocks=2560, version=2
+8           =                  sectsz=512   sunit=0 blks, lazy-count=1
+9  realtime =none              extsz=4096   blocks=0, rtextents=0
+{% endhighlight %}
+
+各个参数的解释
+- 第1行里，isize指inode的容量，单位Bytes。agcount指储存区群组的个数。agsize指每个储存区群组的大小，blks指blocks
+- 第2行里，sectsz指扇区容量大小
+- 第4行里，bsize指block的容量，blocks指block的总数
+- 第5行里，sunit与swidth斗鱼磁盘阵列的stripe相关
+- 第7行里，internal指日志区的位置在文件系统内，非外部设备，后面接着的bsize指日志区占用的block数量。
+- 第9行里，realtime区域，extsz就是extent的容量。
+
+[***manual***](man7.org/linux/man-pages/man8/xfs_info.8.html)
+
+xfs文件系统的[manual](man7.org/linux/man-pages/man5/xfs.5.html)
+
+---
+
+## 文件系统的简单操作
+
+---
+
+### 磁盘与目录的容量
+
+#### 列出文件系统整体磁盘使用量-df
+
+格式：df [-ahikHTm] [*目录或文件名*]
+
+选项：
+- -a：列出所有的文件系统，包括系统特有的/proc等文件系统
+- -k：以KB单位来显示各个文件系统。默认单位就是KB。
+- -m：以MB单位来显示各个文件系统
+- **-h：以人们易阅读的数值和单位（GB、MB、KB）等单位来显示**
+- -H：以M=1000K代替M=1024K的进位
+- -T：列出分区的文件系统名
+- **-i：使用inode的数量而不是磁盘容量来显示**
+
+[***manual***](http://man7.org/linux/man-pages/man1/df.1.html)
+
+#### du指令
+
+格式：du [-ahskm] *文件名或目录名*
+
+选项：
+- -a：列出所有文件与目录大小，默认进统计当前目录及子目录的大小。
+- -h：以易读的方式显示
+- **-s：列出总量，而不是各个文件夹的大小**
+- -S：列出目录的大小时，不包括子目录的大小
+- -k：以KB为单位显示
+- -m：以MB为单位显示
+
+当没有加入选项时，du会分析当前目录的文件和子目录占用的磁盘空间，但是只会最终显示各个目录的大小，不显示文件。
+
+[***manual***](http://man7.org/linux/man-pages/man1/du.1.html)
+
+---
+
+### 硬链接和符号链接-ln
+
+Linux下，有两种链接文件，一种类似Windows的快捷方式，可以快速链接到目标文件，另一种则是通过文件系统的inode链接来产生新的文件名，而不是新的文件。
+
+#### Hard Link-硬链接，实体链接
+
+Hard Link是在某个目录下新增一个文件来链接到某个inode号码关联的记录。也就是，新建的文件和原来的文件，都指向同一个inode。因此，两个文件的权限，属性完全一样。可以说是一模一样的文件。
+
+最大的好处是安全，当一个硬链接的文件被删除之后，如果还有其他硬链接文件，则inode和block还会保留，实际的文件没有被删除。
+
+Hard Link只是目录下记录文件的block里新增了一个关联数据，实际上没有增加inode也不会消耗block数量。
+
+然而，Hard Link有以下限制：
+- 不能跨文件系统
+- 不能给目录创建，原因是，若创建目录的Hard Link，也就必须给该目录下的文件和子目录创建Hard Link，非常复杂，因此不会创建。
+
+#### Symbolic Link-符号链接，也就是捷径
+
+符号链接就是创建一个文件，这个文件让数据的读取指向其链接的那个文件的文件名。当源文件被删除以后，链接文件就会失效，无法打开。
+
+符号链接会新建一个文件，因此会占用inode和block。
+
+#### 创建链接的指令-ln
+
+格式：ln [-sf] *源文件* *链接文件*
+
+选项：
+- **-s：建立符号链接。不加时建立硬链接**
+- -f：强制执行，若链接文件存在，则覆盖链接文件
+
+[***manual***](http://man7.org/linux/man-pages/man1/ln.1.html)
+
+#### 关于目录的link数量
+
+创建一个新的空目录时，若叫foo，会存在三个东西，分别是
+- /foo
+- /foo/.
+- /foo/..
+
+因此，新目录的link数量会是2，上层目录的link数量会加1
+
+---
+
+## 磁盘的分区 格式化 检验与挂载
+
+当一个新的硬盘进来时，需要如下步骤：
+1. 对磁盘进行分区
+2. 对分区进行格式化，创建系统可用的文件系统
+3. 可以检验刚才建立的文件系统
+4. 创建挂载点，并挂载该文件系统
+
+---
+
+### 观察磁盘分区状态
+
+#### lsblk-列出系统上所有磁盘列表
+
+格式：lsblk [-dfimpt] [device]
+
+选项：
+- -d：仅列出磁盘，不列出分区数据
+- -f：同时列出磁盘内的文件系统名
+- -i：使用ASCII输出，不使用其他编码
+- -m：同时输出该设备在/dev下的权限数据
+- -p：列出该设备的完整文件名
+- -t：列出该设备的详细数据，包括硬盘队列机制，预读写的数据量大小
+
+lsblk各个字段的解释
+- NAME：设备文件名
+- MAJ:MIN：主要：次要设备代码，Linux认识设备的方式
+- RM：是否可卸载，如光盘，USB设备
+- SIZE：容量
+- RO：是否只读
+- TYPE：类型，是磁盘、分区、还是只读存储器
+- MOUNTPOINT：挂载点
+
+[***manual***](http://man7.org/linux/man-pages/man8/lsblk.8.html)
+
+#### blkid-列出设备的UUID等参数
+
+UUID是全域单一识别码（Universally Unique IDentifier），Linux会给系统内所有的设备都赋予一个独一无二的识别码，可以用来挂载或者使用这个设备或文件系统。
+
+[***manual***](http://man7.org/linux/man-pages/man8/blkid.8.html)
+
+---
+
+### 磁盘分区 gdisk fdisk
+
+MBR分区表使用fdisk分区，GPT分区表用gdisk分区。
+
+#### gdisk
+
+格式：gdisk *设备名称*
+
+gdisk是个命令行工具。在gdisk程序内，有下面的命令可供使用
+- b：备份GPT分区表到一个文件
+- c：改变一个分区的名字
+- **d：删除一个分区**
+- i：打印一个分区的详细信息
+- l：列出已知的分区类型
+- **n：增加一个分区**
+- o：创建一个新的空的GUID分区表（GPT）
+- **p：打印分区表**
+- **q：不保存退出**
+- r：恢复和更改选项（专家专用）
+- s：给分区排序
+- t：更改分区的类型编码
+- v：验证硬盘
+- **w：写分区表到磁盘并离开**
+- x：额外功能（专家专用）
+- L：显示文件系统类型的代号
+- ?：打印帮助信息
+
+**查看分区信息**
+
+按下p可以列出目前磁盘的分区表信息，下面列出这些分区信息的属性含义：
+- Number：分区编号
+- Start(Sector)：分区开始扇区的号码
+- End(Sector)：分区结束扇区的号码
+- Size：分区容量
+- Code：分区内可能的文件系统类型，如Linux为8300，swap为8200
+- Name：文件系统的名称
+
+**新增分区**
+
+按下n新增分区，主要步骤有：
+1. 输入分区编号，默认为第一个未使用的编号
+2. 输入第一个分区的扇区编号，默认输好第一个未使用的扇区编号。
+3. 输入最后的扇区号。这里可以不需要自己算扇区编号，可以输入加号+加上大小，单位可以为KMGTP个字节。默认会使用剩余所有的扇区！
+4. 输入预计使用的文件系统的代号，Linux的文件系统为8200/8300/8e00，Windows为0700等。
+
+分区表修改完成后，需要重新启动系统才能够载入新的分区。通过`cat /proc/partitions`查看目前核心载入的分区。或者使用[partprobe指令](http://man7.org/linux/man-pages/man8/partprobe.8.html)。格式为`partprobe [-s]`，-s表示是否显示讯息。
+
+**删除分区**
+
+使用d删除分区，只需指定删除的分区号码就行。
+
+注意千万不要删除正在使用中的文件系统。
+
+[***manual***](https://linux.die.net/man/8/gdisk)
+
+#### fdisk
+
+处理MBR分区表必须使用fdisk。使用方式跟gdisk几乎完全一样。不再赘述，给出[手册](http://man7.org/linux/man-pages/man8/fdisk.8.html)。
+
+---
+
+### 磁盘格式化-创建文件系统-mkfs
+
+mkfs是创建文件系统的总指令。下面介绍创建不同类型系统的指令。
+
+[***manual***](http://man7.org/linux/man-pages/man8/mkfs.8.html)
+
+#### mkfs.xfs
+
+格式：mkfs.xfs [-b *bsize*] [-d *params*] [-i *params*] [-l *params*] [-L *label*] [-f] [-r *params*] *设备名*
+
+选项：
+- 关于单位，下面的数值，没有加单位时，默认单位为Bytes，可以用小写的k,m,g,t,p,s作单位，s代表扇区的个数
+- -b：后面接block容量，范围是512到64k，但是Linux限制为4k
+- -d：后面接data section的相关参数，主要有：
+  - agcount=*数值*：设置储存群组的数量，与CPU配合，1个ag一个cpu较好
+  - agsize=*数值*：设置每个储存群组的容量。通常agcount/agsize选择一个设置即可
+  - file：指要格式化的设备是个文件而不是真正的设备，如虚拟磁盘
+  - size=*数值*：data section的容量
+  - su=*数值*：当有RAID时，代表stripe数值，与sw共用
+  - sw=*数值*：当有RAID时，代表用于储存数据的磁盘数量（扣除备份磁盘和备用磁盘）
+  - sunit=*数值*：跟su相当，不过单位是sector
+  - swidth=*数值*：是`su*sw`的数值，单位是sector
+- -f：强制执行，若设备已有文件系统，则强行覆盖
+- -i：与inode相关的设置，主要有：
+  - size=*数值*：最小256Bytes最大2k，256够用了
+  - internal=[0|1]：log是否内置，默认1为内置
+  - logdev=*device*：指定log设备
+  - size=*数值*：指日志区的容量
+- -L：接文件系统的Label Name
+- -r：指定realtime section的设置，常见的有
+  - extsize=*数值*：设置extent的大小，默认即可。最小4k最大1g。如果有RAID，与swidth相同较好。
+
+[***manual***](http://man7.org/linux/man-pages/man8/mkfs.xfs.8.html)
+
+#### mkfs.ext4
+
+格式：mkfs.ext4 [-b *size*] [-L *label*] *设备名*
+
+选项：
+- -b：设置block的大小
+- -L：设置label名
+
+还有许多参数没列出来，默认值可以在`/etc/mke2fs.conf`中查找
+
+[***manual***](https://linux.die.net/man/8/mkfs.ext4)
+
+#### 其他文件系统
+
+还有许多mkfs指令可以使用呢，一般有：mkfs.btrfs, mkfs.cramfs, mkfs.ext2, mkfs.ext3, mkfs.ext4, mkfs.fat, mkfs.minix, mkfs.msdos, mkfs.vfat, mkfs.xfs
+
+---
+
+### 文件系统检验
+
+#### 处理xfs文件系统-xfs_repair
+
+格式：xfs_repair [-fnd] *设备名称*
+
+选项：
+- -f：后面设备是文件而不是物理设备
+- -n：只检查系统，不修改文件系统数据
+- -d：用在单人维护模式下，针对根目录进行检查与修复。**危险，勿乱用**
+
+修复一个文件系统时，该文件系统不能被挂载。
+
+[***manual***](http://man7.org/linux/man-pages/man8/xfs_repair.8.html)
+
+#### 处理ext4文件系统-fsck.ext4
+
+[fsck](http://man7.org/linux/man-pages/man8/fsck.8.html)是个综合的处理文件系统的指令。
+
+格式：fsck.ext4 [-pf] [-b superblock] *设备名*
+
+选项：
+- -p：自动修复，不会询问
+- -f：强制检查。因为fsck若没有发现unclean的旗标，不会进去内部检查。通过这个选项强制检查。
+- -D：优化文件系统下的文件夹
+- -b：接superblock的位置，指定superblock的放置位置，在主superblock被破坏时使用。
+
+[***manual***](http://man7.org/linux/man-pages/man8/e2fsck.8.html)
+
+---
+
+### 文件系统挂载与卸载
+
+挂载前要确定的几件事：
+- 单一文件系统不应该被重复挂载在不同的挂载点
+- 单一目录不应该重复挂载多个文件系统
+- 要作为挂载点的目录，理论上应该是空目录。若非空，源目录的文件会暂时消失。
+
+#### 挂载指令-mount
+
+格式：
+- mount -a
+- mount [-l]
+- mount [-t *文件系统*] LABEL="" *挂载点*
+- mount [-t *文件系统*] UUID="" *挂载点*
+- mount [-t *文件系统*] *设备文件名* *挂载点*
+
+选项：
+
+
+
