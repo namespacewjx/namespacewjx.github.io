@@ -23,8 +23,8 @@
 
 ## 我的笔记
 
-[Linux学习笔记](/studying/notes/linux)
-
+- [Linux学习笔记](/studying/notes/linux/index)
+- [JVM学习笔记](/studying/notes/jvm)
 
 
 

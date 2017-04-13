@@ -53,7 +53,7 @@ permalink: /useful_websites
 - [Coursera](https://www.coursera.org/)：三大MOOC网站之一，大学生申请助学金可以免费上课哦（不过审核有点久了）
 - [GitHub 上有哪些值得推荐的开源电子书？](https://www.zhihu.com/question/38836382)
 - [鸟哥的Linux私房菜](http://linux.vbird.org/)：鸟哥写的教程，文字很生动，通俗易懂，入门Linux的好地方。有印刷版和电子书版卖。
-
+- [Java之美\[从菜鸟到高手演变\]系列之博文](http://blog.csdn.net/zhangerqing/article/details/8245560)：CSDN博主终点总结的许多干货，适合看！
 ---
 
 # 电子书分享

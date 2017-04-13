@@ -22,6 +22,7 @@ permalink: /studying/notes/linux
             * [MSDOS分区表格式](#msdos分区表格式)
             * [GUID partition table GPT磁盘分区表](#guid-partition-table-gpt磁盘分区表)
 * [第四章 首次登陆与线上求助](#第四章-首次登陆与线上求助)
+    * [](#)
     * [命令行模式指令的下达](#命令行模式指令的下达)
         * [基础指令的操作](#基础指令的操作)
             * [显示日期的指令-date](#显示日期的指令-date)
@@ -151,6 +152,16 @@ permalink: /studying/notes/linux
             * [处理ext4文件系统-fsck.ext4](#处理ext4文件系统-fsck-ext4)
         * [文件系统挂载与卸载](#文件系统挂载与卸载)
             * [挂载指令-mount](#挂载指令-mount)
+            * [卸载文件目录-umount](#卸载文件目录-umount)
+        * [磁盘 文件系统参数修改](#磁盘-文件系统参数修改)
+            * [手动创建设备文件-mknod](#手动创建设备文件-mknod)
+            * [修改xfs文件系统的UUID和Label name指令-xfs_admin](#修改xfs文件系统的uuid和label-name指令-xfs_admin)
+            * [修改ext4的label name和UUID-tune2fs](#修改ext4的label-name和uuid-tune2fs)
+    * [设置开机挂载](#设置开机挂载)
+        * [开机挂载设置](#开机挂载设置)
+        * [特殊设备loop挂载 镜像文件的挂载](#特殊设备loop挂载-镜像文件的挂载)
+            * [创建大文件来制作loop设备](#创建大文件来制作loop设备)
+    * [](#)
 
 <!-- vim-markdown-toc -->
 
@@ -213,7 +224,7 @@ permalink: /studying/notes/linux
 ---
 
 # 第四章 首次登陆与线上求助
-
+ 
 ---
 
 ## 命令行模式指令的下达
@@ -1741,6 +1752,150 @@ mkfs是创建文件系统的总指令。下面介绍创建不同类型系统的�
 - mount [-t *文件系统*] *设备文件名* *挂载点*
 
 选项：
+- -a：依据配置文件`/etc/fstab`的数据将所有未挂载的磁盘都挂载上来
+- -l：显示Label名，默认不显示
+- -t：后面接文件系统的类型，如xfs,ext3,ext4等
+- -n：默认情况下，系统将挂载情况实时写入/etc/mtab中。而在单人维护模式中，为了避免问题，加入这个选项以不写入。
+- -o：后面接挂载时加入的额外参数，主要有下面这些
+  - async,sync：使用同步（sync）或是异步（async）的内存机制。默认为async。
+  - atime,noatime：是否修改文件的读取时间（atime）。为了性能，某些时刻可使用noatime
+  - ro,rw：挂载文件系统为只读（ro）或读写（rw）
+  - auto,noauto：允许此文件系统被以`mount -a`自动挂载
+  - dev,nodev：是否允许这个文件系统上创建设备文件，dev为允许
+  - suid,nosuid：是否允许这个文件系统有suid/sgid文件权限
+  - exec,noexec：是否允许这个文件系统拥有可执行文件
+  - user,nouser：是否允许这个文件系统让任何使用者挂载。默认只有root可挂载
+  - defaults：默认值为`rw, suid, dev, exec, auto, nouser, async`
+  - remount：重新挂载，在系统出错，或更新参数的时候用到
 
 
+- 文件`/etc/filesystem`记录系统指定的测试挂载文件系统类型的优先顺序。
+- 文件`/proc/filesystems`记录系统已经载入的文件类型。
+- 目录`/lib/modules/$(uname -r)/kernel/fs`中存放着Linux支持的驱动程序。
 
+若挂载的文件系统有中文文件名，可在挂载时指定挂载文件系统使用的语系数据。通过制定codepage和iocharset的值。具体看man mount。
+
+可以使用mount命令来将某个目录挂载到另外一个目录中去，注意不是挂载文件系统，在不支持符号链接的程序运行的时候用。使用`--bind`参数来挂载目录。
+
+[***manual***](http://man7.org/linux/man-pages/man8/mount.8.html)
+
+#### 卸载文件目录-umount
+
+注意是**umount**，不是unmount。
+
+格式：umount [-fn] *设备文件名或挂载点*
+
+选项：
+- -f：强制卸载
+- -l：立刻卸载文件系统，比-f强
+- -n：不更新/etc/mtab的情况下卸载
+
+无法卸载当前的工作目录或者当前工作目录的父目录或祖先目录，需到其他地方执行这个命令。
+
+[***manual***](http://man7.org/linux/man-pages/man8/umount.8.html)
+
+---
+
+### 磁盘 文件系统参数修改
+
+#### 手动创建设备文件-mknod
+
+格式：mknod *设备文件名* [bcp] [Major] [Minor]
+
+选项及参数：
+- b：创建为块设备文件（block special file）
+- c：创建为字符设备文件（Character special file）
+- p：创建为FIFO文件
+- Major：主要设备代码
+- Minor：次要设备代码
+
+关于Linux的设备文件，详细看[Wikipedia](https://en.wikipedia.org/wiki/Device_file)
+
+[***manual***](http://man7.org/linux/man-pages/man1/mknod.1.html)
+
+#### 修改xfs文件系统的UUID和Label name指令-xfs_admin
+
+格式：xfs_admin [-lu] [-L label] [-U uuid] *设备文件名*
+
+选项：
+- -l：列出设备的label name
+- -u：列出设备的UUID
+- -L：设置设备的label name
+- -U：设置设备的UUID
+
+[uuidgen](http://man7.org/linux/man-pages/man1/uuidgen.1.html)指令用于生产新的UUID。
+
+因为文件系统的UUID是唯一的，但是设备文件名，在不同的系统，不同的条件下，可能会不同。若不知道设备文件名，可使用UUID挂载。
+
+[***manual***](http://man7.org/linux/man-pages/man8/xfs_admin.8.html)
+
+#### 修改ext4的label name和UUID-tune2fs
+
+格式：tune2fs [-l] [-L *Label*] [-U *uuid*] *设备文件名*
+
+选项：
+- -l：类似`dumpe2fs -h`，将superblock的数据读出来
+- -L：修改Label name
+- -U：修改UUID
+
+[***manual***](http://man7.org/linux/man-pages/man8/tune2fs.8.html)
+
+---
+
+## 设置开机挂载
+
+---
+
+### 开机挂载设置
+
+在/etc/fstab设置文件里，修改开机挂载的文件系统。
+
+系统挂载的一些限制：
+- 根目录`/`是必须挂载的，而且必须先于其他挂载点被挂载进来
+- 其他挂载点必须为已创建的目录，可任意指定，但是必须遵守系统目录构架原则FHS
+- 所有挂载点在同一时间之内，只能挂载一次
+- 所有分区在同一时间之内，只能挂载一次
+- 如要进行卸载，必须先将工作目录移动到挂载点及其子目录之外
+
+示例文本
+
+    /dev/mapper/centos-root                     /       xfs     defaults    0 0
+    UUID=94ac5f77-cb8a-495e-a65b-2ef7442b837c   /boot   xfs     defaults    0 0
+    /dev/mapper/centos-home                     /home   xfs     defaults    0 0
+    /dev/mapper/centos-swap                     swap    swap    defaults    0 0
+
+文件中各个字段的含义如下：
+- 设备/UUID等
+  可以填写的主要有三个项目，选其一即可，分别是：
+  - 文件系统或设备的文件名
+  - UUID
+  - Label名
+- 挂载点
+- 文件系统类型
+- 文件系统参数
+  就是填入mount时需要的选项和参数
+- dump
+  是否能在此文件系统使用dump指令，因为有许多的备份指令了，可以为0
+- fsck
+  是否在开机检验扇区，xfs会自检，可以为0
+
+[***manual***](http://man7.org/linux/man-pages/man5/fstab.5.html)
+
+---
+
+### 特殊设备loop挂载 镜像文件的挂载
+
+挂载光盘镜像文件命令格式：mount -o loop *镜像文件* *挂载目录*
+
+#### 创建大文件来制作loop设备
+
+- 创建大型文件
+  使用dd命令（第八章会详细说明）创建大型空文件
+- 大型文件格式化
+  默认xfs不能格式化文件，必须加入`-f`参数才行，如`mkfs.xfs -f /srv/loopdev`
+- 挂载
+  使用mount命令，加入`-o loop`参数即可
+
+---
+
+## 
