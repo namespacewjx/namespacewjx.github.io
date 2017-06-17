@@ -37,6 +37,8 @@ permalink: /useful_websites
 - [StackOverFlow](http://http://stackoverflow.com/)：著名的软件开发者社区
 - [CSDN](http://www.csdn.net/)：可能是国内最大的编程社区，还有许多有用的资源在这里有。（才不告诉你下载积分什么的，嘿嘿嘿）
 - [LeetCode](https://leetcode.com/)：在线OJ网站，程序员刷算法很重要哦！
+- [赛码网](http://www.acmcoder.com/index)：刷题刷题，名企题库和笔试网站
+- [牛客网](https://www.nowcoder.com/)：继续刷题，名企题库和笔试网站
 - [Kaggle](https://www.kaggle.com/)：机器学习社区，比赛，交流，等等
 - [Linux中国](https://linux.cn/)：Linux中国开源社区，学习交流Linux的好地方
 - [Iteye](http://www.iteye.com/)：貌似是不错的Java社区
@@ -54,6 +56,8 @@ permalink: /useful_websites
 - [GitHub 上有哪些值得推荐的开源电子书？](https://www.zhihu.com/question/38836382)
 - [鸟哥的Linux私房菜](http://linux.vbird.org/)：鸟哥写的教程，文字很生动，通俗易懂，入门Linux的好地方。有印刷版和电子书版卖。
 - [Java之美\[从菜鸟到高手演变\]系列之博文](http://blog.csdn.net/zhangerqing/article/details/8245560)：CSDN博主终点总结的许多干货，适合看！
+- [W3School](http://www.w3school.com.cn)：可以学习很多很多Web建站的知识，HTML、CSS、JS等等
+
 ---
 
 # 电子书分享
