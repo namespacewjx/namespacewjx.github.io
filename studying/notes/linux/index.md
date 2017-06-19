@@ -18,3 +18,5 @@ title: Linux学习笔记
   - [第八章 文件与文件系统的压缩，打包与备份](chapter/08)
   - [第九章 vim程序编辑器](chapter/09)
   - [第十章 认识与学习BASH](chapter/10)
+  - [第十一章 正则表达式与文件格式化处理](chapter/11)
+  - [第十二章 学习Shell Scripts](chapter/12)
