@@ -16,7 +16,11 @@ title: Linux学习笔记
   - [第六章 Linux的文件与目录管理](chapter/06)
   - [第七章 Linux磁盘与文件系统管理](chapter/07)
   - [第八章 文件与文件系统的压缩，打包与备份](chapter/08)
+- 第三部分 学习Shell和Shell Script
   - [第九章 vim程序编辑器](chapter/09)
   - [第十章 认识与学习BASH](chapter/10)
   - [第十一章 正则表达式与文件格式化处理](chapter/11)
   - [第十二章 学习Shell Scripts](chapter/12)
+- 第四部分 Linux使用者管理
+  - [第十三章 Linux账号管理与ACL权限设置](chapter/13)
+
