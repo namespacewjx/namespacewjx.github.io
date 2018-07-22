@@ -2,6 +2,7 @@
 title: LeetCode 557，翻转一个字符串里的单词
 date: 2017-04-14 11:47:51 +0800
 tags: 算法
+layout: post
 ---
 
 # LeetCode第557题-翻转一个字符串里的单词

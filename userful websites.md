@@ -1,7 +1,7 @@
 ---
-title: 学习网址整理
-date: 2017-03-28 20:17:39 +0800
-permalink: /useful_websites
+title: Links
+layout: post
+permalink: /links
 ---
 
 *有许多网站都是英文的。程序员的英语阅读能力很重要，许多非常宝贵的学习资源都是英文的，硬着头皮练下英语吧，很有帮助的。*
@@ -25,7 +25,7 @@ permalink: /useful_websites
 - [Apache](http://www.apache.org/)：著名开源软件基金会Apache，许多广泛使用的开源项目，如Tomcat，Hadoop等都是Apache下的项目。
 - [Spring框架官网](https://spring.io/)
 - [Git官方网站](https://git-scm.com/)：下载和学习Git版本管理工具
-- [Linux官方网站](http://www.linux.org/) 
+- [Linux官方网站](http://www.linux.org/)
 
 ---
 

@@ -1,7 +1,10 @@
 ---
 title: 一个计算字符串是否由可以移动变成另外一个字符串的算法
 date: 2017-03-23 22:38:41 +0800
-tags: 编程,算法,字符串
+tags:
+  - 算法
+  - 字符串
+layout: post
 ---
 
 今天在做牛客网的摸底考试题的时候，遇到一道可能很经典的字符串算法题。
@@ -45,7 +48,7 @@ public class Main{
 				char c = s.charAt(j);
 				map[c - 'a']++;
 			}
-			
+
 			//笨方法，重新合成一条字符串，然后用String.hashCode()。真的超级笨的
 			StringBuilder builder = new StringBuilder();
 			for (int j = 0; j < 26; j++) {
@@ -54,7 +57,7 @@ public class Main{
 				}
 			}
 			int hashCode = builder.toString().hashCode();
-			
+
 			//把刚才计算的值放进去HashMap
 			if (hashMap.containsKey(hashCode)) {
 				Integer remove = hashMap.remove(hashCode);
@@ -64,7 +67,7 @@ public class Main{
 			}
 		}
 		return hashMap.size();//这个散列表的大小就是多少类了
-		
+
 	}
 {% endhighlight %}
 
@@ -121,6 +124,3 @@ public static int fenlei2(String[] strings) {
 +  字符串旋转问题：给出若干条字符串，其中如果能够通过字符串旋转变成另外一条字符串，则两条字符串为一类，求有多少类字符串
 
 （文中的推理都是基于我的认识而来，并没有做验证。如果有错，欢迎指出）
-
-
-

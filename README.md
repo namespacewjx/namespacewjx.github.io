@@ -5,3 +5,5 @@
 可以看看我的博客的文章是怎么用markdown写的。文章都会在\_post文件夹下面哦
 
 Have Fun!
+
+感谢[Hux](huangxuan.me)提供的主题！

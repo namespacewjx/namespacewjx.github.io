@@ -1,7 +1,10 @@
 ---
 title: 解决Android Studio中，gradle更新慢的问题
 date: 2017-03-27 15:39:58 +0800
-tags: 技巧, Android Studio
+tags:
+  - 技巧
+  - Android Studio
+layout: post
 ---
 
 Android Studio突然叫更新Gradle至3.3版本，好吧，按了下更新。
