@@ -6,4 +6,4 @@
 
 Have Fun!
 
-感谢[Hux](huangxuan.me)提供的主题！
+感谢[Hux](https://huangxuan.me)提供的主题！
