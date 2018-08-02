@@ -87,4 +87,30 @@ go tool link -o main -L /home/wjx/go/pkg/linux_amd64/ main.o
 1. go的不同版本编译出来的`.a`文件无法共用。只能使用同一个版本编译出的文件。
 2. mtime hack
 
-只是到最后也只是把这个功能标注为实验性功能，并没有真正的实现在go编译器中。
+只是到最后也只是把这个功能标注为实验性功能，加入到了go1.7版本中。描述在这个文档中：<https://tip.golang.org/pkg/go/build/#hdr-Binary_Only_Packages>
+
+# 使用`//go: binary-only-package`
+
+1.10出来以后，要求使用`//go: binary-only-package`的包，需要显式声明使用了的包。
+
+我们继续用回刚才的例子，那么我只要改成下面这样子
+
+```go
+//go:binary-only-package
+
+package niu
+
+// 1.10开始必须有显式的import
+import (
+    "sort"
+)
+
+// 函数声明、这些是可以省略的，但是为了文档的需要，以及让编译器能够提供代码提示，我们可以在这里提供辣鸡实现。
+func NiuSort(nums []int) []int {
+    return nil
+}
+```
+
+然后，需要把这个文件和`.a`文件放到相应的位置，就能够给其他包使用了。
+
+这里也有一个例子：<https://github.com/tcnksm/go-binary-only-package>
