@@ -70,10 +70,26 @@ ceph mon getmap -o <monmap文件名>
 ceph-mon -i amaster --mkfs --monmap <monmap文件> [--keyring <keyring文件>]
 ```
 
-接下来这两步与官网的不同。先是修改monitor文件夹的拥有者，改回ceph，因为创建时为root，而monitor运行时的用户为ceph，无法访问这个文件夹。
+接下来这几步与官网的不同。先是修改monitor文件夹的拥有者，改回ceph，因为创建时为root，而monitor运行时的用户为ceph，无法访问这个文件夹。
 
 ```bash
 chown -R ceph:ceph /var/lib/ceph/mon/ceph-amaster
+```
+
+修改配置文件，让新的monitor使用新的地址进行绑定。如果图方便，就修改global的，如下
+
+```
+[global]
+...
+public addr = 192.168.1.0/24
+```
+
+或者保险一点，仅修改新的mon的，如下
+
+```
+[mon.amaster]
+...
+public addr = 192.168.1.0/24
 ```
 
 然后使用systemctl功能启动ceph-monitor
